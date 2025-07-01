@@ -21,9 +21,9 @@ const MainCard = () => {
     }
 
     return (
-        <div className="p-1 w-10/12 mx-auto mt-2">
-            <section className="mb-3">
-                <div className="h-10 flex gap-3 items-center">
+        <div className="py-1 w-10/12 mx-auto mt-4">
+            <section className="mb-5">
+                <div className="h-10 flex gap-4 items-center">
                     <button className="cursor-pointer">
                         <ChevronLeftIcon className="w-4 h-4 text-gray-200" />
                     </button>
@@ -39,7 +39,7 @@ const MainCard = () => {
                         </div>
                         <div className="text-2xl font-bold">$1,878.67</div>
                     </div>
-                    <Link to='/buy' className="bg-blue-500 text-white w-[90%] mx-auto py-4 rounded-md flex items-center justify-center gap-3 font-medium cursor-pointer">
+                    <Link to='/buy' className="bg-blue-500 text-white w-[90%] mx-auto py-4 rounded-xl flex items-center justify-center gap-3 font-medium cursor-pointer">
                         <span>
                             <PlusIcon className="w-4 h-4 text-gray-200" />
                         </span>
@@ -104,7 +104,7 @@ const MainCard = () => {
                     </div>
                 </div>
             </section>
-            <div className="h-3 mt-7 bg-[#2e2e2e] "/>
+            <div className="h-3 mt-7 bg-[#2e2e2e] w-[100vw] relative left-1/2 -translate-x-1/2" />
             <section className="mt-5">
                 <div className="flex gap-5 flex-col">
                     <div className="flex gap-1 justify-between">
@@ -121,7 +121,7 @@ const MainCard = () => {
                     <div>
                         <div className="relative w-full">
                             <button onClick={toggleOpen}
-                                    className="w-full border border-[#2e2e2e] rounded-md px-4 py-2 flex justify-between items-center text-left shadow-sm ">
+                                    className="w-full border border-[#2e2e2e] rounded-md px-4 py-3 flex justify-between items-center text-left shadow-sm ">
                                 {selected}
                                 <ChevronDownIcon className="w-4 h-4 text-gray-500" />
                             </button>
@@ -145,7 +145,7 @@ const MainCard = () => {
                     <div className="text-sm ">Your balance will be auto recharged when there is less than 3 minutes of the call you are on our your account</div>
                 </div>
             </section>
-            <div className="h-3 mt-7 bg-[#2e2e2e] "/>
+            <div className="h-3 mt-7 bg-[#2e2e2e] w-[100vw] relative left-1/2 -translate-x-1/2" />
             <section className="mt-5">
                 <div className="flex justify-between items-center">
                     <div className="font-bold">Recent transactions</div>

@@ -5,8 +5,21 @@ import visa from "../../assets/visa.svg";
 import information from "../../assets/information.png";
 
 const BuyCredit = () => {
-    // const [isOpen, setIsOpen] = useState<boolean>(false);
-    // const [selected, setSelected] = useState<boolean>(true);
+    const amounts = ["$10","$20", "$50", "$100", "$200", "Custom"];
+    // const [selected, setSelected] = useState(amounts[0]);
+    // const [open, setOpen] = useState(false);
+    // const [MoneyValue, setMoneyValue] = useState(0);
+
+    const ButtonRender = (amounts: Array<string>) => amounts.map((amount) => {
+        return (
+            <button className="w-28 h-15 rounded-xl border-amber-100 border-solid border-1 cursor-pointer" onClick={(e) => ButtonListener(e.target)}>{amount}</button>
+        )
+    })
+
+    // @ts-ignore
+    const ButtonListener = (target: EventTarget) => {
+        console.log(target);
+    }
 
 
     return (
@@ -22,12 +35,7 @@ const BuyCredit = () => {
                 <div className="flex flex-col gap-8">
                     <div className="font-medium">Choose amount</div>
                     <div className="grid grid-cols-3 gap-6 mx-auto">
-                        <button className="w-28 h-15 rounded-xl border-amber-100 border-solid border-1 cursor-pointer">$10</button>
-                        <button className="w-28 h-15 rounded-xl border-amber-100 border-solid border-1 cursor-pointer">$20</button>
-                        <button className="w-28 h-15 rounded-xl border-amber-100 border-solid border-1 cursor-pointer">$50</button>
-                        <button className="w-28 h-15 rounded-xl border-amber-100 border-solid border-1 cursor-pointer">$100</button>
-                        <button className="w-28 h-15 rounded-xl border-amber-100 border-solid border-1 cursor-pointer">$200</button>
-                        <button className="w-28 h-15 rounded-xl border-amber-100 border-solid border-1 cursor-pointer">Custom</button>
+                        {ButtonRender(amounts)}
                     </div>
                 </div>
             </section>
@@ -38,7 +46,7 @@ const BuyCredit = () => {
                     <div className="flex items-center gap-4 mb-5 border-1 border-solid border-[#2e2e2e] rounded-xl p-2.5">
                         <img
                             src={visa}
-                            alt="master"
+                            alt="visa"
                             width={60}
                             className="rounded-xl overflow-hidden shrink-0"
                         />

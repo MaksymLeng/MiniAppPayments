@@ -30,7 +30,7 @@ const MainCard = () => {
                     <div className="font-medium">Wallet</div>
                 </div>
             </section>
-            <section className="mb-12 bg-gray-800 rounded-xl p-3">
+            <section className="mb-12 bg-[#2e2e2e] rounded-xl p-3">
                 <div className="text-white mb-0.5">Your balance</div>
                 <div className="flex gap-5 mb-3.5 flex-col items-start">
                     <div className="flex gap-2 items-center">
@@ -146,12 +146,14 @@ const MainCard = () => {
                 </div>
             </section>
             <div className="h-3 mt-7 bg-[#2e2e2e] "/>
-            <section>
-                <div>
-                    <div></div>
-                    <div>
-                        <span>Recent transactions</span>
-                        <ChevronRightIcon className="w-4 h-4 text-gray-500" />
+            <section className="mt-5">
+                <div className="flex justify-between items-center">
+                    <div className="font-bold">Recent transactions</div>
+                    <div className="flex gap-2 items-center">
+                        <span className="text-blue-500 cursor-pointer">View all</span>
+                        <button className="cursor-pointer">
+                            <ChevronRightIcon className="w-4 h-4 text-blue-500"/>
+                        </button>
                     </div>
                 </div>
             </section>

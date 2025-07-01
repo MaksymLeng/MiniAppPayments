@@ -1,0 +1,40 @@
+# 👉 Node.js
+node_modules/
+dist/
+build/
+
+# 👉 Vite
+.vite/
+.vite-cache/
+
+# 👉 TypeScript
+*.tsbuildinfo
+
+# 👉 Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# 👉 Environment
+.env
+.env.*
+
+# 👉 macOS
+.DS_Store
+
+# 👉 WebStorm / JetBrains
+.idea/
+*.iml
+
+# 👉 Coverage / testing
+coverage/
+
+# 👉 Misc
+*.log
+*.swp
+*.swo
+Thumbs.db
+Desktop.ini
+
+Training

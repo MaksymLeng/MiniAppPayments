@@ -1,29 +1,36 @@
-import {useState} from "react";
+import {Fragment, useState} from "react";
 import {Link} from "react-router-dom";
+import { Listbox, ListboxButton, ListboxOption, ListboxOptions} from "@headlessui/react"
 import {ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, PlusIcon} from "@heroicons/react/24/solid";
+import AddCardModal from "../AddCard/AddCardModal.tsx";
+
+import type {CardFormData} from "../../Interface_Type/type.tsx";
+
 import visa from '../../assets/visa.svg'
 import master from '../../assets/master.svg'
 import defence from '../../assets/defence.png'
 
+const amounts = [20, 50, 100, 200];
 
 const MainCard = () => {
     const [enabled, setEnabled] = useState(false);
-    const amounts = ["$20", "$50", "$100", "$200"];
     const [selected, setSelected] = useState(amounts[0]);
-    const [open, setOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     const toggleSwitch = () => {
         setEnabled(!enabled);
     }
 
-    const toggleOpen = () => {
-        setOpen(!open);
+    const handleCardSubmit = (form: CardFormData) => {
+        console.log('Получено:', form);
+        // можно: отправить на API, показать toast, сохранить в стейт и т.п.
+        console.log('Карта добавлена 🎉');
     }
 
     return (
-        <div className="p-1 w-10/12 mx-auto mt-2">
-            <section className="mb-3">
-                <div className="h-10 flex gap-3 items-center">
+        <div className="py-1 w-10/12 mx-auto mt-4">
+            <section className="mb-5">
+                <div className="h-10 flex gap-4 items-center">
                     <button className="cursor-pointer">
                         <ChevronLeftIcon className="w-4 h-4 text-gray-200" />
                     </button>
@@ -39,7 +46,7 @@ const MainCard = () => {
                         </div>
                         <div className="text-2xl font-bold">$1,878.67</div>
                     </div>
-                    <Link to='/buy' className="bg-blue-500 text-white w-[90%] mx-auto py-4 rounded-md flex items-center justify-center gap-3 font-medium cursor-pointer">
+                    <Link to='/buy' className="bg-blue-500 text-white w-[90%] mx-auto py-4 rounded-xl flex items-center justify-center gap-3 font-medium cursor-pointer">
                         <span>
                             <PlusIcon className="w-4 h-4 text-gray-200" />
                         </span>
@@ -50,13 +57,14 @@ const MainCard = () => {
             <section>
                 <div className="flex justify-between items-center gap-2 mb-2.5">
                     <div className="font-semibold">Payment cards</div>
-                    <button className="font-semibold text-blue-500 flex gap-2 cursor-pointer items-center justify-center">
+                    <button onClick={() => setIsOpen(true)} className="font-semibold text-blue-500 flex gap-2 cursor-pointer items-center justify-center">
                         <span className="font-bold">
                             <PlusIcon className="w-4 h-4 text-gray-200" />
                         </span>
                         <span>Add card</span>
                     </button>
                 </div>
+                <AddCardModal isOpen={isOpen} onClose={() => setIsOpen(false)} onSubmit={handleCardSubmit} />
 
                 <div className="flex items-center gap-3">
                     <img
@@ -104,7 +112,7 @@ const MainCard = () => {
                     </div>
                 </div>
             </section>
-            <div className="h-3 mt-7 bg-[#2e2e2e] "/>
+            <div className="h-3 mt-7 bg-[#2e2e2e] w-[100vw] relative left-1/2 -translate-x-1/2" />
             <section className="mt-5">
                 <div className="flex gap-5 flex-col">
                     <div className="flex gap-1 justify-between">
@@ -114,38 +122,46 @@ const MainCard = () => {
                         </div>
                         <div
                             onClick={toggleSwitch}
-                            className={`w-16 h-8 flex bg-blue-500 items-center rounded-full p-1 cursor-pointer transition duration-300 ${enabled ? 'justify-end' : 'justify-start'}`}>
-                            <div className="bg-white w-6 h-6 rounded-full shadow-md transform transition-transform duration-300"/>
+                            className={`w-16 h-8 flex items-center rounded-full p-1 cursor-pointer transition duration-500 ${enabled
+                                ? 'bg-gradient-to-br from-green-400 via-blue-500 justify-end'
+                                : 'bg-[#2e2e2e] justify-start'}`}>
+                            <div className={`bg-white w-6 h-6 rounded-full shadow-md transform transition duration-500 ${enabled ? 'shadow-[0_0_10px_2px_rgba(59,130,246,0.7)]' : ''}`} />
                         </div>
                     </div>
-                    <div>
-                        <div className="relative w-full">
-                            <button onClick={toggleOpen}
-                                    className="w-full border border-[#2e2e2e] rounded-md px-4 py-2 flex justify-between items-center text-left shadow-sm ">
-                                {selected}
-                                <ChevronDownIcon className="w-4 h-4 text-gray-500" />
-                            </button>
-                            <ul
-                                className={`absolute mt-1 w-full border border-[#2e2e2e] rounded-md shadow-md z-20 bg-[#1e1e1e] transition-all duration-300 ease-in-out transform ${open ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-95 pointer-events-none"}`}>
-                                {amounts.map(amount => (
-                                    <li
-                                        key={amount}
-                                        onClick={() => {
-                                            setSelected(amount);
-                                            setOpen(false);
-                                        }}
-                                        className="px-4 py-2 hover:bg-gray-500 cursor-pointer"
-                                    >
-                                        {amount}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
+                    <div className="px-1.5">
+                        <Listbox value={selected} onChange={setSelected}>
+                            <div className="relative">
+                                <ListboxButton className="w-full border border-[#2e2e2e] rounded-md px-4 py-3 flex justify-between items-center text-left shadow-sm bg-[#1e1e1e] text-white">
+                                    {`$${selected}`}
+                                    <ChevronDownIcon className="w-4 h-4 text-gray-400" />
+                                </ListboxButton>
+
+                                <ListboxOptions
+                                    className="absolute mt-1 w-full border border-[#2e2e2e] rounded-md shadow-md z-20 bg-[#1e1e1e] transition-all duration-300 ease-in-out origin-top transform"
+                                >
+                                    {amounts.map((amount) => (
+                                        <ListboxOption
+                                            key={amount}
+                                            value={amount}
+                                            as={Fragment}>
+                                            {({ focus, selected }) => (
+                                                <li className={`px-4 py-2 cursor-pointer list-none ${focus ? "bg-gray-700" : ""} ${selected ? "text-blue-400": "text-white"}`}>
+                                                    <div className="flex items-center justify-between">
+                                                        {`$${amount}`}
+                                                        {selected && <span className="text-sm">✓</span>}
+                                                    </div>
+                                                </li>
+                                            )}
+                                        </ListboxOption>
+                                    ))}
+                                </ListboxOptions>
+                            </div>
+                        </Listbox>
                     </div>
-                    <div className="text-sm ">Your balance will be auto recharged when there is less than 3 minutes of the call you are on our your account</div>
+                    <div className="text-sm">Your balance will be auto recharged when there is less than 3 minutes of the call you are on our your account</div>
                 </div>
             </section>
-            <div className="h-3 mt-7 bg-[#2e2e2e] "/>
+            <div className="h-3 mt-7 bg-[#2e2e2e] w-[100vw] relative left-1/2 -translate-x-1/2" />
             <section className="mt-5">
                 <div className="flex justify-between items-center">
                     <div className="font-bold">Recent transactions</div>

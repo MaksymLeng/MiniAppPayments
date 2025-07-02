@@ -1,6 +1,6 @@
-import type {Card} from "../Interface_Type/type.tsx";
-import visa from "../assets/visa.svg";
-import master from "../assets/master.svg";
+import type {Card} from "../Interface_Type/Type.tsx";
+import visa from "../assets/Cards/visa.svg";
+import master from "../assets/Cards/master.svg";
 
 export const Cards : Card[] = [
     {

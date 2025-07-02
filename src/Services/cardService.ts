@@ -1,7 +1,7 @@
 import {Cards} from "../Data/Cards.ts";
-import { Card, CardFormData } from "../Interface_Type/type.tsx";
-import visa from "../assets/visa.svg";
-import mastercard from "../assets/master.svg";
+import type {Card, CardFormData} from "../Interface_Type/Type.tsx";
+import visa from "../assets/Cards/visa.svg";
+import mastercard from "../assets/Cards/master.svg";
 
 let cards: Card[] = Cards;
 

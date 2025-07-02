@@ -1,3 +1,4 @@
+import type {FC} from "react";
 import {
     Dialog,
     DialogPanel,
@@ -7,26 +8,18 @@ import {
 } from '@headlessui/react'
 import { Fragment } from 'react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
-import type { Card } from '../../Interface_Type/type'
+import type {CardDetailsModalProps} from "../../Interface_Type/Interface.tsx";
 
-interface Props {
-    isOpen: boolean
-    onClose: () => void
-    card: Card
-    onSetPrimary: (id: string) => void
-    onDelete: (id: string) => void
-}
 
-export function CardDetailsModal({ isOpen, onClose, card, onSetPrimary, onDelete }: Props) {
-    return (
+export const CardDetailsModal: FC<CardDetailsModalProps> = ({isOpen, onClose, card, onSetPrimary, onDelete}) => (
         <Transition show={isOpen} as={Fragment}>
             <Dialog as="div" className="relative z-50" onClose={onClose}>
                 <TransitionChild
                     as={Fragment}
-                    enter="transition-all duration-500"
+                    enter="transition duration-500"
                     enterFrom="translate-y-full opacity-0"
                     enterTo="translate-y-0 opacity-100"
-                    leave="transition-all duration-300"
+                    leave="transition duration-300"
                     leaveFrom="translate-y-0 opacity-100"
                     leaveTo="translate-y-full opacity-0"
                 >
@@ -36,10 +29,10 @@ export function CardDetailsModal({ isOpen, onClose, card, onSetPrimary, onDelete
                 <div className="fixed inset-0 flex items-end justify-center p-0">
                     <TransitionChild
                         as={Fragment}
-                        enter="transition-all duration-300"
+                        enter="transition duration-300"
                         enterFrom="translate-y-full opacity-0"
                         enterTo="translate-y-0 opacity-100"
-                        leave="transition-all duration-200"
+                        leave="transition duration-200"
                         leaveFrom="translate-y-0 opacity-100"
                         leaveTo="translate-y-full opacity-0"
                     >
@@ -90,5 +83,4 @@ export function CardDetailsModal({ isOpen, onClose, card, onSetPrimary, onDelete
                 </div>
             </Dialog>
         </Transition>
-    )
-}
+)

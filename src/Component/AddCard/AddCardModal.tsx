@@ -8,7 +8,7 @@ import {
 import { Fragment } from 'react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { AddCardForm } from './AddCardForm'
-import type {AddCardModalProps} from "../../Interface_Type/type.tsx";
+import type {AddCardModalProps} from "../../Interface_Type/Type.tsx";
 
 
 export default function AddCardModal({ isOpen, onClose, onSubmit }: AddCardModalProps) {

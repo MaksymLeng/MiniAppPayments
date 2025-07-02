@@ -2,10 +2,10 @@ import {useState} from "react";
 import {Link} from "react-router-dom";
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions} from "@headlessui/react"
 import {ChevronDownIcon, ChevronLeftIcon} from "@heroicons/react/24/outline";
-import type {Card} from "../../Interface_Type/type.tsx";
+import type {Card} from "../../Interface_Type/Type.tsx";
 import {Cards as cards} from "../../Data/Cards.ts";
 import {amountsCredit as amounts} from "../../Data/Amounts.ts";
-import information from "../../assets/information.png";
+import information from "../../assets/Messages/information.png";
 
 
 const BuyCredit = () => {

@@ -3,17 +3,22 @@ import {Link} from "react-router-dom";
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions} from "@headlessui/react"
 import {ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, PlusIcon} from "@heroicons/react/24/solid";
 import AddCardModal from "../AddCard/AddCardModal.tsx";
-import { addCard, getCards } from "../../Services/cardService.ts";
+import {Transactions} from "../../Data/Transactions"; // путь подкорректируй если нужно
+
+import { CardDetailsModal } from "../CardDetailsModal/CardDetailsModal.tsx";
+import {addCard, getCards, removeCard, setPrimaryCard} from "../../Services/cardService.ts";
 import {amountsRecharge as amounts} from "../../Data/Amounts.ts";
 
-import type {CardFormData} from "../../Interface_Type/type.tsx";
-import defence from '../../assets/defence.png'
+import type {Card, CardFormData} from "../../Interface_Type/Type.tsx";
+import defence from '../../assets/Messages/defence.png'
 
 const MainCard = () => {
     const [enabled, setEnabled] = useState(false);
     const [selected, setSelected] = useState(amounts[0]);
     const [isOpen, setIsOpen] = useState(false);
     const [cards, setCards] = useState<Card[]>(getCards());
+    const [isDetailsOpen, setDetailsOpen] = useState(false);
+    const [selectedCard, setSelectedCard] = useState<Card | null>(null);
 
     const toggleSwitch = () => {
         setEnabled(!enabled);
@@ -22,6 +27,11 @@ const MainCard = () => {
     const handleCardSubmit = (form: CardFormData) => {
         const newCard = addCard(form);
         setCards([...getCards()]);
+    };
+
+    const handleOpenDetails = (card: Card) => {
+        setSelectedCard(card);
+        setDetailsOpen(true);
     };
 
 
@@ -84,14 +94,30 @@ const MainCard = () => {
                                 </div>
                                 <div className="opacity-50 text-xs mt-0.5">{card.last4}</div>
                             </div>
-                            <button className="cursor-pointer">
+                            <button className="cursor-pointer"  onClick={() => handleOpenDetails(card)}>
                                 <ChevronRightIcon className="w-4 h-4 text-gray-200" />
                             </button>
                         </div>
                     </div>
                 ))}
 
-
+                {selectedCard && (
+                    <CardDetailsModal
+                        isOpen={isDetailsOpen}
+                        onClose={() => setDetailsOpen(false)}
+                        card={selectedCard}
+                        onDelete={(id) => {
+                            removeCard(id); // если есть
+                            setCards([...getCards()]);
+                            setDetailsOpen(false);
+                        }}
+                        onSetPrimary={(id) => {
+                            setPrimaryCard(id); // если есть
+                            setCards([...getCards()]);
+                            setDetailsOpen(false);
+                        }}
+                    />
+                )}
 
                 <div className="bg-green-200/15 rounded-lg py-2 px-3 text-sm flex items-center">
                     <img src={defence} alt="defence" className="rounded-xl overflow-hidden shrink-0 h-10 w-10"/>
@@ -159,6 +185,27 @@ const MainCard = () => {
                             <ChevronRightIcon className="w-4 h-4 text-blue-500"/>
                         </button>
                     </div>
+                </div>
+                <div className="mt-4 space-y-5">
+                    {Transactions.map((tx) => (
+                        <div key={tx.id} className="flex justify-between items-center">
+                            <div className="flex gap-3 items-center">
+                                <img
+                                    src={tx.avatar}
+                                    alt={tx.name}
+                                    className="w-10 h-10 rounded-full object-cover"
+                                />
+                                <div className="flex flex-col">
+                                    <div className="font-medium">{tx.name}</div>
+                                    <div className="text-xs text-gray-400">{tx.date}</div>
+                                </div>
+                            </div>
+                            <div className="flex flex-col items-end">
+                                <div className="font-medium text-white">-${tx.amount}</div>
+                                <div className="text-xs text-green-500">Success</div>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </section>
         </div>

@@ -2,7 +2,7 @@ import { Fragment, useState } from 'react'
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import type {FormEvent} from "react";
-import type { AddCardFormProps, CardFormData} from "../../Interface_Type/type.tsx";
+import type { AddCardFormProps, CardFormData} from "../../Interface_Type/Type.tsx";
 
 
 const countries = [

@@ -3,6 +3,8 @@ export type Card = {
     name: string
     last4: string
     logo: string
+    primary: boolean;
+    Data?: CardFormData
 }
 
 export type AddCardFormProps = {

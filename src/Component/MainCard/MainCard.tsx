@@ -3,29 +3,27 @@ import {Link} from "react-router-dom";
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions} from "@headlessui/react"
 import {ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, PlusIcon} from "@heroicons/react/24/solid";
 import AddCardModal from "../AddCard/AddCardModal.tsx";
+import { addCard, getCards } from "../../Services/cardService.ts";
+import {amountsRecharge as amounts} from "../../Data/Amounts.ts";
 
 import type {CardFormData} from "../../Interface_Type/type.tsx";
-
-import visa from '../../assets/visa.svg'
-import master from '../../assets/master.svg'
 import defence from '../../assets/defence.png'
-
-const amounts = [20, 50, 100, 200];
 
 const MainCard = () => {
     const [enabled, setEnabled] = useState(false);
     const [selected, setSelected] = useState(amounts[0]);
     const [isOpen, setIsOpen] = useState(false);
+    const [cards, setCards] = useState<Card[]>(getCards());
 
     const toggleSwitch = () => {
         setEnabled(!enabled);
     }
 
     const handleCardSubmit = (form: CardFormData) => {
-        console.log('Получено:', form);
-        // можно: отправить на API, показать toast, сохранить в стейт и т.п.
-        console.log('Карта добавлена 🎉');
-    }
+        const newCard = addCard(form);
+        setCards([...getCards()]);
+    };
+
 
     return (
         <div className="py-1 w-10/12 mx-auto mt-4">
@@ -66,44 +64,34 @@ const MainCard = () => {
                 </div>
                 <AddCardModal isOpen={isOpen} onClose={() => setIsOpen(false)} onSubmit={handleCardSubmit} />
 
-                <div className="flex items-center gap-3">
-                    <img
-                    src={visa}
-                    alt="visa"
-                    width={60}
-                    className="rounded-xl overflow-hidden shrink-0"
-                    />
-                    <div className="flex justify-between items-center w-full">
-                        <div className="flex items-center gap-2 font-medium">
-                            Domen Kralj{' '}
-                            <div className="rounded-lg text-blue-500 bg-blue-100 px-1 py-[0.02rem] text-[0.7rem]">
-                                Primary
+                {cards.map((card) => (
+                    <div key={card.id} className="flex items-center gap-3 mb-5">
+                        <img
+                            src={card.logo}
+                            alt={card.id}
+                            width={60}
+                            className="rounded-xl overflow-hidden shrink-0"
+                        />
+                        <div className="flex justify-between items-center w-full">
+                            <div className="flex flex-col items-start font-medium">
+                                <div className="flex items-center gap-2.5">
+                                    {card.name}
+                                    {card.primary && (
+                                        <div className="rounded-lg text-blue-500 bg-blue-100 px-1 py-[0.02rem] text-[0.7rem]">
+                                            Primary
+                                        </div>
+                                    )}
+                                </div>
+                                <div className="opacity-50 text-xs mt-0.5">{card.last4}</div>
                             </div>
-                            <div className="opacity-50 text-xs mt-0.5">**** 6775</div>
+                            <button className="cursor-pointer">
+                                <ChevronRightIcon className="w-4 h-4 text-gray-200" />
+                            </button>
                         </div>
-                        <button className="cursor-pointer">
-                            <ChevronRightIcon className="w-4 h-4 text-gray-200" />
-                        </button>
                     </div>
-                </div>
+                ))}
 
-                <div className="flex items-center gap-3 mb-5">
-                    <img
-                        src={master}
-                        alt="master"
-                        width={60}
-                        className="rounded-xl overflow-hidden shrink-0"
-                    />
-                    <div className="flex justify-between items-center w-full">
-                        <div className="flex items-center gap-2 font-medium">
-                            Domen Kralj{' '}
-                            <div className="opacity-50 text-xs mt-0.5">**** 3009</div>
-                        </div>
-                        <button className="cursor-pointer">
-                            <ChevronRightIcon className="w-4 h-4 text-gray-200 mx-auto" />
-                        </button>
-                    </div>
-                </div>
+
 
                 <div className="bg-green-200/15 rounded-lg py-2 px-3 text-sm flex items-center">
                     <img src={defence} alt="defence" className="rounded-xl overflow-hidden shrink-0 h-10 w-10"/>

@@ -3,27 +3,13 @@ import {Link} from "react-router-dom";
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions} from "@headlessui/react"
 import {ChevronDownIcon, ChevronLeftIcon} from "@heroicons/react/24/outline";
 import type {Card} from "../../Interface_Type/type.tsx";
-import visa from "../../assets/visa.svg";
-import mastercard from "../../assets/master.svg";
+import {Cards as cards} from "../../Data/Cards.ts";
+import {amountsCredit as amounts} from "../../Data/Amounts.ts";
 import information from "../../assets/information.png";
 
-const cards : Card[] = [
-    {
-        id: "visa",
-        name: "Domen Kralj",
-        last4: "**** 6775",
-        logo: visa,
-    },
-    {
-        id: "mastercard",
-        name: "Domen Kralj",
-        last4: "**** 3009",
-        logo: mastercard,
-    },
-];
 
 const BuyCredit = () => {
-    const amounts = ["$10","$20", "$50", "$100", "$200", "Custom"];
+
     const [activeValue, setActiveValue] = useState<string | null>(null);
     const [customAmount, setCustomAmount] = useState<string>("");
     const [selected, setSelected] = useState<Card>(cards[0]);

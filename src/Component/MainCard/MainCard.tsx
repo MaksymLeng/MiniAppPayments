@@ -25,7 +25,7 @@ const MainCard = () => {
     }
 
     const handleCardSubmit = (form: CardFormData) => {
-        const newCard = addCard(form);
+        addCard(form); //can be added to the variable
         setCards([...getCards()]);
     };
 

@@ -2,6 +2,10 @@ import {Fragment, useState} from "react";
 import {Link} from "react-router-dom";
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions} from "@headlessui/react"
 import {ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, PlusIcon} from "@heroicons/react/24/solid";
+import AddCardModal from "../AddCard/AddCardModal.tsx";
+
+import type {CardFormData} from "../../Interface_Type/type.tsx";
+
 import visa from '../../assets/visa.svg'
 import master from '../../assets/master.svg'
 import defence from '../../assets/defence.png'
@@ -11,9 +15,16 @@ const amounts = [20, 50, 100, 200];
 const MainCard = () => {
     const [enabled, setEnabled] = useState(false);
     const [selected, setSelected] = useState(amounts[0]);
+    const [isOpen, setIsOpen] = useState(false);
 
     const toggleSwitch = () => {
         setEnabled(!enabled);
+    }
+
+    const handleCardSubmit = (form: CardFormData) => {
+        console.log('Получено:', form);
+        // можно: отправить на API, показать toast, сохранить в стейт и т.п.
+        console.log('Карта добавлена 🎉');
     }
 
     return (
@@ -46,13 +57,14 @@ const MainCard = () => {
             <section>
                 <div className="flex justify-between items-center gap-2 mb-2.5">
                     <div className="font-semibold">Payment cards</div>
-                    <Link to='/test' className="font-semibold text-blue-500 flex gap-2 cursor-pointer items-center justify-center">
+                    <button onClick={() => setIsOpen(true)} className="font-semibold text-blue-500 flex gap-2 cursor-pointer items-center justify-center">
                         <span className="font-bold">
                             <PlusIcon className="w-4 h-4 text-gray-200" />
                         </span>
                         <span>Add card</span>
-                    </Link>
+                    </button>
                 </div>
+                <AddCardModal isOpen={isOpen} onClose={() => setIsOpen(false)} onSubmit={handleCardSubmit} />
 
                 <div className="flex items-center gap-3">
                     <img

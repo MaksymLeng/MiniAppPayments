@@ -7,3 +7,12 @@ export interface CardDetailsModalProps {
     onSetPrimary: (id: string) => void
     onDelete: (id: string) => void
 }
+
+export interface Transaction {
+    id: number
+    name: string
+    avatar: string
+    date: string
+    amount: number
+    status: "Success" | "Failed" | "Pending";
+}

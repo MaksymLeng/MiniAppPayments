@@ -3,16 +3,19 @@ import {Link} from "react-router-dom";
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions} from "@headlessui/react"
 import {ChevronDownIcon, ChevronLeftIcon} from "@heroicons/react/24/outline";
 import type {Card} from "../../Interface_Type/Type.tsx";
-import {Cards as cards} from "../../Data/Cards.ts";
 import {amountsCredit as amounts} from "../../Data/Amounts.ts";
 import information from "../../assets/Messages/information.png";
+import {getCards} from "../../Services/cardService.ts";
 
 
 const BuyCredit = () => {
 
     const [activeValue, setActiveValue] = useState<string | null>(null);
     const [customAmount, setCustomAmount] = useState<string>("");
-    const [selected, setSelected] = useState<Card>(cards[0]);
+    const [cards] = useState<Card[]>(getCards());
+    const primaryCard = cards.find((card) => card.primary) || cards[0];
+    const [selected, setSelected] = useState<Card>(primaryCard);
+
 
 
     const handleClick = (value: string) => {
@@ -26,7 +29,7 @@ const BuyCredit = () => {
     })
 
     return (
-        <div className="h-full py-1">
+        <div className="min-h-screen py-1">
             <section className="w-10/12 mx-auto mt-4">
                 <div className="h-10 flex gap-4 items-center">
                     <Link to="/" className="cursor-pointer">
@@ -60,7 +63,7 @@ const BuyCredit = () => {
             <section className="w-10/12 mx-auto mt-6">
                 <div className="flex flex-col gap-5">
                     <div className="font-bold">Payment method</div>
-                    <div className="p-3">
+                    <div className="py-3">
                         <Listbox value={selected} onChange={setSelected}>
                             <div className="relative">
 
@@ -70,9 +73,12 @@ const BuyCredit = () => {
                                         <div className="flex gap-2 flex-col items-start font-medium">
                                             <div className="flex items-center gap-2.5">
                                                 {selected.name}
-                                                <div className="rounded-lg text-blue-500 bg-blue-100 px-1 py-[0.02rem] text-[0.7rem]">
-                                                    Primary
-                                                </div>
+                                                {selected.primary && (
+                                                    <div className="rounded-lg text-blue-500 bg-blue-100 px-1 py-[0.02rem] text-[0.7rem]">
+                                                        Primary
+                                                    </div>
+                                                )}
+
                                             </div>
                                             <div className="opacity-50 text-xs mt-0.5">{selected.last4}</div>
                                         </div>

@@ -1,3 +1,5 @@
+import type {Transaction} from "./Interface.tsx";
+
 export type Card = {
     id: string
     name: string
@@ -25,3 +27,6 @@ export type CardFormData = {
     expiry: string
     cvc: string
 }
+
+export type TransactionList = Transaction[]
+

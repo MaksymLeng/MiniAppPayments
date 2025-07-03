@@ -1,8 +1,12 @@
+import type {Transaction} from "./Interface.tsx";
+
 export type Card = {
     id: string
     name: string
     last4: string
     logo: string
+    primary: boolean;
+    Data?: CardFormData
 }
 
 export type AddCardFormProps = {
@@ -23,3 +27,6 @@ export type CardFormData = {
     expiry: string
     cvc: string
 }
+
+export type TransactionList = Transaction[]
+

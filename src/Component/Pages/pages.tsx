@@ -1,9 +1,7 @@
-import MainCard from "../MainCard/MainCard.tsx";
 import BuyCredit from "../BuyCredit/BuyCredit.tsx";
-import Test from "../Test/Test.tsx";
+import MainPage from "./MainPage.tsx";
 
 export const Pages = [
-    {path:"/", element: <MainCard/>},
+    {path:"/", element: <MainPage/>},
     {path:"/buy", element: <BuyCredit/> },
-    {path:"/test", element: <Test/>}
 ]

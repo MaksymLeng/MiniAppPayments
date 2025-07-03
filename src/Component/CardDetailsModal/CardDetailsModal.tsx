@@ -29,9 +29,9 @@ export const CardDetailsModal: FC<CardDetailsModalProps> = ({isOpen, onClose, ca
                 <div className="fixed inset-0 flex items-end justify-center p-0">
                     <TransitionChild
                         as={Fragment}
-                        enter="transition duration-300"
+                        enter="transition duration-500"
                         enterFrom="translate-y-full opacity-0"
-                        enterTo="translate-y-0 opacity-100"
+                        enterTo="translate-y-0 opacity-300"
                         leave="transition duration-200"
                         leaveFrom="translate-y-0 opacity-100"
                         leaveTo="translate-y-full opacity-0"
